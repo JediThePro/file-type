@@ -1,4 +1,4 @@
-# file-type [![Build Status](https://travis-ci.com/sindresorhus/file-type.svg?branch=master)](https://travis-ci.com/github/sindresorhus/file-type)
+# <code>file-type.js</code>
 
 > Detect the file type of a Buffer/Uint8Array/ArrayBuffer
 
@@ -6,10 +6,10 @@ The file type is detected by checking the [magic number](https://en.wikipedia.or
 
 This package is for detecting binary-based file formats, not text-based formats like `.txt`, `.csv`, `.svg`, etc.
 
-## Install
+## Installation
 
 ```
-$ npm install file-type
+$ npm install file-type.js
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ $ npm install file-type
 Determine file type from a file:
 
 ```js
-const FileType = require('file-type');
+const FileType = require('file-type.js');
 
 (async () => {
 	console.log(await FileType.fromFile('Unicorn.png'));
@@ -30,7 +30,7 @@ const FileType = require('file-type');
 Determine file type from a Buffer, which may be a portion of the beginning of a file:
 
 ```js
-const FileType = require('file-type');
+const FileType = require('file-type.js');
 const readChunk = require('read-chunk');
 
 (async () => {
@@ -45,7 +45,7 @@ Determine file type from a stream:
 
 ```js
 const fs = require('fs');
-const FileType = require('file-type');
+const FileType = require('file-type.js');
 
 (async () => {
 	const stream = fs.createReadStream('Unicorn.mp4');
@@ -60,7 +60,7 @@ The stream method can also be used to read from a remote location:
 
 ```js
 const got = require('got');
-const FileType = require('file-type');
+const FileType = require('file-type.js');
 
 const url = 'https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg';
 
@@ -78,7 +78,7 @@ Another stream example:
 const stream = require('stream');
 const fs = require('fs');
 const crypto = require('crypto');
-const FileType = require('file-type');
+const FileType = require('file-type.js');
 
 (async () => {
 	const read = fs.createReadStream('encrypted.enc');
@@ -91,36 +91,6 @@ const FileType = require('file-type');
 
 	const write = fs.createWriteStream(`decrypted.${fileTypeStream.fileType.ext}`);
 	fileTypeStream.pipe(write);
-})();
-```
-
-#### Browser
-
-```js
-const FileType = require('file-type/browser');
-
-const url = 'https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg';
-
-(async () => {
-	const response = await fetch(url);
-	const fileType = await FileType.fromStream(response.body);
-
-	console.log(fileType);
-	//=> {ext: 'jpg', mime: 'image/jpeg'}
-})();
-```
-
-```js
-const FileType = require('file-type/browser');
-
-(async () => {
-	const blob = new Blob(['<?xml version="1.0" encoding="ISO-8859-1" ?>'], {
-		type: 'plain/text',
-		endings: 'native'
-	});
-
-	console.log(await FileType.fromBlob(blob));
-	//=> {ext: 'txt', mime: 'plain/text'}
 })();
 ```
 
@@ -204,7 +174,7 @@ An example is [`@tokenizer/http`](https://github.com/Borewit/tokenizer-http), wh
 
 ```js
 const {makeTokenizer} = require('@tokenizer/http');
-const FileType = require('file-type');
+const FileType = require('file-type.js');
 
 const audioTrackUrl = 'https://test-audio.netlify.com/Various%20Artists%20-%202009%20-%20netBloc%20Vol%2024_%20tiuqottigeloot%20%5BMP3-V2%5D/01%20-%20Diablo%20Swing%20Orchestra%20-%20Heroines.mp3';
 
@@ -220,7 +190,7 @@ const audioTrackUrl = 'https://test-audio.netlify.com/Various%20Artists%20-%2020
 Or use [`@tokenizer/s3`](https://github.com/Borewit/tokenizer-s3) to determine the file type of a file stored on [Amazon S3](https://aws.amazon.com/s3):
 
 ```js
-const FileType = require('file-type');
+const FileType = require('file-type.js');
 const S3 = require('aws-sdk/clients/s3');
 const {makeTokenizer} = require('@tokenizer/s3');
 
@@ -241,26 +211,6 @@ const {makeTokenizer} = require('@tokenizer/s3');
 ```
 
 Note that only the minimum amount of data required to determine the file type is read (okay, just a bit extra to prevent too many fragmented reads).
-
-#### tokenizer
-
-Type: [`ITokenizer`](https://github.com/Borewit/strtok3#tokenizer)
-
-A file source implementing the [tokenizer interface](https://github.com/Borewit/strtok3#tokenizer).
-
-### FileType.stream(readableStream)
-
-Detect the file type of a readable stream.
-
-Returns a `Promise` which resolves to the original readable stream argument, but with an added `fileType` property, which is an object like the one returned from `FileType.fromFile()`.
-
-*Note:* This method is only available using Node.js.
-
-#### readableStream
-
-Type: [`stream.Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable)
-
-The input stream.
 
 ### FileType.extensions
 
@@ -415,20 +365,3 @@ The following file types will not be accepted:
 	- `.msi` - Microsoft Windows Installer
 - `.csv` - [Reason.](https://github.com/sindresorhus/file-type/issues/264#issuecomment-568439196)
 - `.svg` - Detecting it requires a full-blown parser. Check out [`is-svg`](https://github.com/sindresorhus/is-svg) for something that mostly works.
-
-## file-type for enterprise
-
-Available as part of the Tidelift Subscription.
-
-The maintainers of file-type and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. [Learn more.](https://tidelift.com/subscription/pkg/npm-file-type?utm_source=npm-file-type&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
-
-## Related
-
-- [file-type-cli](https://github.com/sindresorhus/file-type-cli) - CLI for this module
-
-## Maintainers
-
-- [Sindre Sorhus](https://github.com/sindresorhus)
-- [Mikael Finstad](https://github.com/mifi)
-- [Ben Brook](https://github.com/bencmbrook)
-- [Borewit](https://github.com/Borewit)
